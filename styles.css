@@ -355,3 +355,15 @@ body.menu-open{overflow:hidden}
   .mobile-menu{padding:20px 18px 22px}
   .mobile-nav a{font-size:16px}
 }
+
+
+/* Pages reliability fix: content remains visible even if JS is blocked or delayed. */
+.reveal{opacity:1!important;transform:none!important}
+.js .reveal{opacity:0!important;transform:translateY(24px)!important;transition:opacity .7s ease,transform .7s ease}
+.js .reveal.from-left{transform:translateX(-30px)!important}
+.js .reveal.from-right{transform:translateX(30px)!important}
+.js .reveal.from-bottom{transform:translateY(34px)!important}
+.js .reveal.visible{opacity:1!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1!important;transform:none!important}
+}

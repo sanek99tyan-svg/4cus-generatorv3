@@ -1,3 +1,4 @@
+document.documentElement.classList.add('js');
 const qs = (s, p = document) => p.querySelector(s);
 const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
@@ -12,14 +13,19 @@ const MENU_ICONS = {
 
 function initReveal() {
   const items = qsa('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('visible'));
+    return;
+  }
   const io = new IntersectionObserver(entries => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
         entry.target.style.transitionDelay = `${Math.min(index * 40, 240)}ms`;
         entry.target.classList.add('visible');
+        io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.14 });
+  }, { threshold: 0.08, rootMargin: '0px 0px -3% 0px' });
   items.forEach(el => io.observe(el));
 }
 
